@@ -1,0 +1,17 @@
+{
+    "student_name": "Jane Doe",
+    "student_id": "123",
+    "answers": [
+      {
+        "question_id": 1,
+        "question": "Explain how HTTP works.",
+        "student_answer": "HTTP is a protocol..."
+      },
+      {
+        "question_id": 2,
+        "question": "What is a REST API?",
+        "student_answer": "It's an interface using HTTP..."
+      }
+    ]
+  }
+  
