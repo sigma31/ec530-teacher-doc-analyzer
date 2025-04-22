@@ -4,3 +4,8 @@ openai
 python-dotenv
 sqlalchemy
 pydantic
+pydantic-settings
+python-multipart
+# For unit testing
+pytest
+httpx
