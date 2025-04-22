@@ -14,3 +14,9 @@ def save_graded_answers(db: Session, student_name: str, student_id: str, results
         )
         db.add(entry)
     db.commit()
+
+def get_all_results(db: Session):
+    return db.query(models.GradedAnswer).all()
+
+def get_results_by_student_id(db: Session, student_id: str):
+    return db.query(models.GradedAnswer).filter(models.GradedAnswer.student_id == student_id).all()

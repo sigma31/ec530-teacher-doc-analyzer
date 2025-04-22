@@ -3,9 +3,30 @@ from app.services.grading import grade_student_answers
 import json
 from app.db.base import SessionLocal
 from app.db.crud import save_graded_answers
+from fastapi import Depends, Query
+from sqlalchemy.orm import Session
+from app.db.base import SessionLocal
+from app.db import crud, models
 
 router = APIRouter()
 
+# Dependency to get DB session
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+@router.get("/results")
+def get_results(student_id: str = Query(None), db: Session = Depends(get_db)):
+    if student_id:
+        results = crud.get_results_by_student_id(db, student_id)
+    else:
+        results = crud.get_all_results(db)
+
+    return {"results": [result.__dict__ for result in results]}
 
 @router.post("/grade")
 async def grade_answers(file: UploadFile = File(...)):
