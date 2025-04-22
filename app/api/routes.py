@@ -1,6 +1,8 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from app.services.grading import grade_student_answers
 import json
+from app.db.base import SessionLocal
+from app.db.crud import save_graded_answers
 
 router = APIRouter()
 
@@ -18,6 +20,10 @@ async def grade_answers(file: UploadFile = File(...)):
 
         # Call grading logic
         graded_results = await grade_student_answers(data)
+        
+        db = SessionLocal()
+        save_graded_answers(db, student_name=data.get("student_name"), student_id=data.get("student_id"), results=graded_results)
+        db.close()
 
         return {"status": "success", "results": graded_results}
 
